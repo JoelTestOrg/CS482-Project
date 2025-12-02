@@ -4,7 +4,6 @@ const express = require('express');
 const morgan = require('morgan');
 const session = require('express-session');
 const cors = require('cors');
-const MongoStore = require('connect-mongo');
 
 // --- Controllers ---
 const SignupController = require('./controller/SignupController');
@@ -41,7 +40,7 @@ app.use(cors({
 const sessionMiddleware = session({
     secret: process.env.SESSION_SECRET || 'fallback-secret',
     cookie: { maxAge: 86400000 },
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+    store: new session.MemoryStore(),
     resave: false,
     saveUninitialized: false
 });
